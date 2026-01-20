@@ -39,3 +39,10 @@ h3{
     width: 31%;
     margin:0.5%;
 }
+
+.coverPage{
+    background-color:lightpink;
+    text-align: center;
+    font-size: 2rem;
+    margin: 3rem;
+}

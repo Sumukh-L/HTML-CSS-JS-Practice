@@ -1,9 +1,60 @@
 const bookContent = {
-    "book1": "This is book1",
-    "book2": "This is book2",
-    "book3": "This is book3",
-    "book4": "This is book4",
-    "book5": "This is book5"
+    "book1": 
+    `When the National Security Agency's invincible code-breaking machine encounters a mysterious code it cannot break, 
+    the agency calls in its head cryptographer, Susan Fletcher, a brilliant, beautiful mathematician, 
+    What she uncovers send shock waves through the corridors of power. The NSA is being held hostage not by guns or bombs, 
+    but by a code so complex that if released would cripple U.S. intelligence. <br>
+
+    Caught in an accelerating tempet of secrecy and lies, Fletcher battles to save the agency she believes in. Betrayed on all sides. 
+    She finds herself fighting not only for her country but for her life, and in the end, for the life of the man she loves...`,
+
+
+    "book2": 
+    `Darkness falls <br>
+
+    Despair abounds.. <br>
+
+    Evil reigns. <br>
+
+    Eragon and his dragon, Saphira, have just saved the rebel state from destruction by the forces of King Galbatorix, cruel ruler of the Empire. 
+    Now Eragon must travel to Ellesméra, land of the elves, for further training in magic and swordsmanship, the vital skills of the Dragon Rider. 
+    It is the journey of a lifetime, each day a fresh adventure. But chaos and Betrayal plague him at every turn, and Eragon isn't sure whom he can trust.<br>
+
+    Meanwhile, his cousin Roran must fight a new battle back home in Carvahall one that puts Eragon in even graver danger`,
+
+
+    "book3": 
+    `'Key is in the lock all right, sir. On the inside. Mr Ackroyd must have locked himself in.'
+
+    Poor Roger Ackroyd. He knew that the woman he loved had been harbouring a guilty secret - she poisoned her first husband. And yesterday she killed herself.
+
+    But guilty secrets rarely stay secret. Who had been blackmailing her before her death? Had it really driven her to suicide? 
+    And would it all be revealed in the letter that arrived in the evening post? Sadly Roger Ackroyd wasn't going to live long enough to find out...`,
+
+
+    "book4": 
+    `EVERY DAY THE SAME. UNTIL TODAY.
+
+    Rachel catches the same commuter train every morning. She knows it will wait at the same signal each time, overlooking a row of back gardens.
+
+    She's even started to feel like she knows the people who live in one of the houses. Their life as she sees it is perfect. If only Rachel could be that happy.
+
+    And then she sees something shocking, and in one moment everything changes.
+
+    Now Rachel has a chance to become a part of the lives she's only watched from afar.
+
+    Now they'll see: she's much more than just the girl on the train..`,
+
+    "book5": 
+    `For Jack Reacher being invisible has become a habit.
+
+    He spends his days digging swimming pools by hand and his nights as the bouncer in the local strip club in the Florida Keys.
+
+    He doesn't want to be found.
+
+    But someone has sent a private detective to seek him out.
+
+    Then Reacher finds the guy beaten to death with his fingertips sliced off. It's time to head north and work out who is trying to find him and why.`
 };
 
 const books = document.querySelectorAll(".book");
@@ -12,12 +63,7 @@ books.forEach((book) => {
     book.addEventListener("click", (event) => {
         const clickedBook = event.currentTarget;
         const bookId = clickedBook.id; 
-        
-        const coverPage = document.createElement("div");
-        coverPage.className = "coverpage";
-        
-        coverPage.innerHTML = bookContent[bookId] ;
 
-        clickedBook.parentElement.appendChild(coverPage);
+        clickedBook.parentElement.nextElementSibling.innerHTML= bookContent[bookId] ;
     });
 });
