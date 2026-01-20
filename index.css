@@ -1,0 +1,41 @@
+h1 {
+    text-align: center;
+    background-color: antiquewhite;
+    font-size: 9rem;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 2%;
+    /* margin: auto; */
+    padding: 3%;
+}
+
+h3{
+    background-color: aquamarine;
+    text-align: center;
+    font-size: 2rem;
+    padding: 1rem;
+    /* margin: auto; */
+}
+
+/* .books{
+    background-color: brown;
+} */
+
+#row1, #row2{
+    /* background-color: blue; */
+    text-align: center;
+    margin-top: 1em;
+}
+
+.book{
+    width: 30%;
+    height: 50rem;
+    margin: 1%;
+    /* background-color: chartreuse; */
+}
+
+.book:hover{
+    cursor: pointer;
+    box-shadow: 1em 1em 2em -0.6em black;
+    width: 31%;
+    margin:0.5%;
+}
