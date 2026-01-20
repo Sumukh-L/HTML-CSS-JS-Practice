@@ -57,13 +57,26 @@ const bookContent = {
     Then Reacher finds the guy beaten to death with his fingertips sliced off. It's time to head north and work out who is trying to find him and why.`
 };
 
-const books = document.querySelectorAll(".book");
+const coverButtons = document.querySelectorAll(".book button");
 
-books.forEach((book) => {
-    book.addEventListener("click", (event) => {
-        const clickedBook = event.currentTarget;
-        const bookId = clickedBook.id; 
+coverButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+        const clickedButton = event.currentTarget;
+        const bookId = clickedButton.id; 
 
-        clickedBook.parentElement.nextElementSibling.innerHTML= bookContent[bookId] ;
+        const allCovers = document.querySelectorAll(".coverPage");
+        allCovers.forEach(cover => {
+            cover.innerHTML = "";
+            cover.style.visibility = "hidden";
+        });
+
+        const coverPage = clickedButton.parentElement.parentElement.nextElementSibling;
+
+        coverPage.innerHTML = bookContent[bookId];
+        coverPage.style.visibility = "visible";
+        coverPage.scrollIntoView({
+            behaviour: 'smooth',
+            block: 'center'
+        });
     });
 });
