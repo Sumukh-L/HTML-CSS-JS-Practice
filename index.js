@@ -24,7 +24,7 @@ const bookContent = {
 
 
     "book3": 
-    `'Key is in the lock all right, sir. On the inside. Mr Ackroyd must have locked himself in.'
+    `'Key is in the lock all right, sir. On the inside. Mr Ackroyd must have locked himself in.' <br>
 
     Poor Roger Ackroyd. He knew that the woman he loved had been harbouring a guilty secret - she poisoned her first husband. And yesterday she killed herself.
 
@@ -33,7 +33,7 @@ const bookContent = {
 
 
     "book4": 
-    `EVERY DAY THE SAME. UNTIL TODAY.
+    `EVERY DAY THE SAME. UNTIL TODAY. <br>
 
     Rachel catches the same commuter train every morning. She knows it will wait at the same signal each time, overlooking a row of back gardens.
 
@@ -46,7 +46,7 @@ const bookContent = {
     Now they'll see: she's much more than just the girl on the train..`,
 
     "book5": 
-    `For Jack Reacher being invisible has become a habit.
+    `For Jack Reacher being invisible has become a habit. <br>
 
     He spends his days digging swimming pools by hand and his nights as the bouncer in the local strip club in the Florida Keys.
 
