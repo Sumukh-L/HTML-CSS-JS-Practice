@@ -8,4 +8,5 @@ Made the website reponsive for different window sizes (minimizing/maximizing win
 Tried to mimic the behaviour of Sixt's car booking website
 (clicking upon a car displays its price and other details below its row and aligns it to the centre for view)
 <img src= "./sixtSS.png">
+<br><br>
 <img src= "./SamvedanamSS.png">
