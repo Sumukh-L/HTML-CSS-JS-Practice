@@ -70,7 +70,7 @@ coverButtons.forEach((button) => {
         const clickedButton = event.currentTarget;
         const bookId = clickedButton.id; 
 
-        const allCovers = document.querySelectorAll(".coverPage");
+        const allCovers = document.querySelectorAll("#coverPage");
         allCovers.forEach(cover => {
             cover.innerHTML = "";
             cover.style.visibility = "hidden";

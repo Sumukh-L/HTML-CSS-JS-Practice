@@ -1,0 +1,187 @@
+body{
+    text-align: center;
+}
+
+#header{
+    padding: 1rem;
+    font-size: 2rem;
+    /* background-color: rgb(197, 179, 232); */
+}
+
+#header h1{
+    color: darkblue;
+}
+
+#sportSelector{
+    display: inline-block;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    /* text-align: center; */
+    /* background-color: blueviolet; */
+}
+
+#cricket{
+    display: inline-block;
+    position: relative;
+    width: 42rem;
+    margin: 1rem;
+    /* background-color: lightgreen; */
+}
+
+#tennis{
+    display: inline-block;
+    position: relative;
+    width: 42rem;
+    margin: 1rem;
+    /* background-color: lightblue; */
+}
+
+#cricketImg{
+    height: 30rem;
+    width: 100%;
+}
+
+#tennisImg{
+    height: 30rem;
+    width: 100%;
+}
+
+#cricketOverlay{
+    position: absolute;
+    top: 70%;
+    left: 5%;
+    font-size: 2.5rem;
+    padding: 0.5rem;
+    border: 0.2rem solid black;
+    border-radius: 1rem;
+    color: white;
+    cursor: pointer;
+    background-color: rgb(17, 0, 255);
+}
+
+#tennisOverlay{
+    position: absolute;
+    top: 70%;
+    left: 5%;
+    font-size: 2.5rem;
+    padding: 0.5rem;
+    border: 0.2rem solid black;
+    border-radius: 1rem;
+    color: white;
+    cursor: pointer;
+    background-color: rgb(17, 0, 255);
+}
+
+.quickQuestions{
+    text-align: center;
+    /* background-color: rgb(196, 227, 231); */
+}
+
+.quickQuestions h2{
+    font-size: 3rem;
+    padding: 1rem;
+    background-color: darkorange;
+}
+
+.quickQuestions span{
+    font-size: 1.5rem;
+    padding: 1rem;
+    /* background-color: limegreen; */
+}
+
+.quickQuestions input{
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+}
+
+.quickQuestions select{
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+}
+
+.quickQuestions button {
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    background-color:aquamarine;
+}
+
+#sets3BtnClicked, #sets5BtnClicked, #p1ServiceBtnClicked, #p2ServiceBtnClicked, 
+#tenOsClicked, #twentyOsClicked, #fiftyOsClicked, #b1StrikeBtnClicked, #b2StrikeBtnCliked{
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    background-color:aquamarine;
+    border: 0.2rem solid teal;
+}
+
+#qSubmit1, #qSubmit2{
+    background-color:lightgrey;
+}
+
+table, th, td {
+    border: 0.1rem solid white;
+    border-collapse: collapse;
+    padding: 1rem;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+#scoreboard{
+    padding: 1rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    /* background-color: lightyellow; */
+}
+
+table{
+    margin: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    width: 60rem;
+    height: auto;
+    background-color: teal;
+}
+
+th,td{
+    background-color: rgb(104, 236, 154);
+}
+
+th{
+    text-align: left;
+}
+
+#p1Service, #p2Service{
+    width: 1%;
+}
+
+#scoreButtons{
+    text-align: center;
+    /* background-color: rgb(245, 156, 156); */
+}
+
+#p1ScoreBtn, #p2ScoreBtn, #resetBtn{
+    font-size: 1.5rem;
+    padding: 0.5rem 1rem 0.5rem 1rem;
+    margin: 1rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+
+#scorecard th{
+    text-align: center;
+}

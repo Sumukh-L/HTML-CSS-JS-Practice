@@ -18,8 +18,9 @@ body{
 h1 {
     display: block;
     text-align: center;
+    width: 100%;
     font-size: 500%;
-    margin-top: 2%;
+    margin-top: 0%;
     padding: 3%;
     background-color: orange;
 }
@@ -32,6 +33,25 @@ h3{
     border: 0.2rem solid black;
     border-radius: 0.3rem;
     background-color: plum;
+}
+
+#searchBar{
+    width: 30rem;
+    height: 2rem;
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    border-radius: 0.5rem;
+    padding: 0.3rem;
+}
+
+#submitButton{
+    height: 2.5rem;
+    font-size: 1.2rem;
+    margin-left: 0.5rem;
+    border-radius: 0.5rem;
+    padding: 0.3rem 0.8rem 0.3rem 0.8rem;
+    cursor: pointer;
+    background-color: lightgreen;
 }
 
 .books{
@@ -89,7 +109,7 @@ h3{
     height: 95%; */
 }
 
-.coverPage{
+#coverPage{
     visibility: hidden;
     width: 45%;
     font-size: 1.75rem;

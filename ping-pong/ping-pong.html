@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ping Pong Game</title>
+    <link rel="stylesheet" href="ping-pong.css">
+</head>
+<body>
+    <img src="tt.jpg" alt="Ping Pong Game">
+    <div class="header">
+        <h1>Ping Pong Game Score Keeper</h1>
+        <form>
+            <label for="winScore">Win Score:</label>
+            <select id="winScore" name="wScore">
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+        </form>
+    </div>
+
+    <div class="display">
+        <h2>Player 1</h2>
+        <h1 id="p1Display">0</h1>
+        <h1 id="p2Display">0</h1>
+        <h2>Player 2</h2>
+    </div>
+
+    <div class="buttons">
+        <button id="p1Button">+1 Player 1</button>
+        <button id="p2Button">+1 Player 2</button>
+        <button id="reset">Reset</button>
+    </div>
+    
+    <br>
+
+    <h1 id="winner"></h1>
+
+    <script type="text/javascript" src="ping-pong.js"></script>
+</body>
+</html>
