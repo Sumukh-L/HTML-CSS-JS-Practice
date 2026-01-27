@@ -175,12 +175,15 @@ const p2ScoreBtn= document.createElement("button");
 p2ScoreBtn.id= "p2ScoreBtn";
 p2ScoreBtn.innerText= "Player 2 Scores"
 const resetBtn= document.createElement("button");
-resetBtn.id= "resetBtn";
-resetBtn.innerText= "Reset Game";
+// resetBtn.id= "resetBtn";
+// resetBtn.innerText= "Reset Game";
 
 scoreButtons.appendChild(p1ScoreBtn);
 scoreButtons.appendChild(p2ScoreBtn);
-scoreButtons.appendChild(resetBtn);
+// scoreButtons.appendChild(resetBtn);
+scoreButtons.appendChild(document.createElement("br"));
+scoreButtons.appendChild(document.createElement("br"));
+scoreButtons.appendChild(document.createElement("br"));
 
 
 
@@ -450,6 +453,53 @@ let p2games;
 let p1wins= 0;
 let p2wins= 0;
 
+function gameUpdate(){
+    // Update the points after the game 
+    p1points= 0;
+    p2points= 0;
+    p1pointsDisplay.innerText= "0";
+    p2pointsDisplay.innerText= "0";
+
+    if(currentServe == 1){
+        currentServe= 2;
+        service1.innerText= "";
+        service2.innerText= "🎾";
+    }else{
+        currentServe= 1;
+        service1.innerText= "🎾";
+        service2.innerText= "";
+    }
+}
+
+function checkSetWin(winner) {
+    // 1. Increment the correct win counter
+    if (winner === 1) p1wins++;
+    else p2wins++;
+
+    // 2. Check if match is over
+    let currentWinnerWins = (winner === 1) ? p1wins : p2wins;
+    if (currentWinnerWins === (numSets / 2.0) + 0.5) {
+        disableButtons();
+        p1pointsDisplay.remove();
+        p2pointsDisplay.remove();
+        let winnerName = (winner === 1) ? (p1Input.value || "Player 1") : (p2Input.value || "Player 2");
+        banner.innerText = winnerName + " Wins the Match!";
+        return true; 
+    }
+
+    // 3. Match not over: Add new set columns to the table
+    const p1newset = document.createElement("td");
+    const p2newset = document.createElement("td");
+    p1newset.innerText = "0";
+    p2newset.innerText = "0";
+
+    p1scores.insertBefore(p1newset, p1pointsDisplay);
+    p2scores.insertBefore(p2newset, p2pointsDisplay);
+    
+    return false;
+}
+
+
 
 p1ScoreBtn.addEventListener("click", function(){
     if(tieBreaker){
@@ -458,11 +508,10 @@ p1ScoreBtn.addEventListener("click", function(){
             p1pointsDisplay.innerText= p1points;
         }else{
             tieBreaker= 0;
-            p1points= 0;
-            p2points= 0;
-            p1pointsDisplay.innerText= "0";
-            p2pointsDisplay.innerText= "0";
+            gameUpdate();
             p1pointsDisplay.previousElementSibling.innerText = +p1pointsDisplay.previousElementSibling.innerText + 1;
+            // Set over. Add a new set if match is not over yet
+            if (checkSetWin(1)) return; 
         }
         return;      
     }
@@ -470,33 +519,22 @@ p1ScoreBtn.addEventListener("click", function(){
     if(p1pointsDisplay.innerText==""){
         p1pointsDisplay.innerText= "40";
         p2pointsDisplay.innerText= "40";
+        banner.innerText= "Deuce";
     }else if(p1pointsDisplay.innerText=="AD"){
-        p1points= 0;
-        p2points= 0;
-        p1pointsDisplay.innerText= "0";
-        p2pointsDisplay.innerText= "0";
+        gameUpdate();
+        banner.innerText= "";
         p1games= parseInt(p1pointsDisplay.previousElementSibling.innerText);
         p1games++;
         p1pointsDisplay.previousElementSibling.innerText= p1games;
+
         if(p1games==6){
             p2games= parseInt(p2pointsDisplay.previousElementSibling.innerText);
             if(p2games<5){
                 // Set over. Add a new set if match is not over yet
-                p1wins++;
-                if(p1wins==(numSets/2.0)+0.5){
-                    disableButtons();   // Match over
-                    return;
-                }
-                const p1newset= document.createElement("td");
-                p1newset.innerText= "0";
-
-                const p2newset= document.createElement("td");
-                p2newset.innerText= "0";
-
-                p1scores.insertBefore(p1newset, p1pointsDisplay); 
-                p2scores.insertBefore(p2newset, p2pointsDisplay);
+                if (checkSetWin(1)) return; 
             }else if(p2games==6){
                 tieBreaker= 1;// Tie breaker
+                banner.innerText= "Tie Breaker";
             }
         }
     }else if(p1points==0){
@@ -506,17 +544,18 @@ p1ScoreBtn.addEventListener("click", function(){
         p1pointsDisplay.innerText= "30";
         p1points= 30;
     }else if(p1points==30){
+        if(p2points==40){
+            banner.innerText= "Deuce";
+        }
         p1pointsDisplay.innerText= "40";
         p1points= 40;
     }else if(p1points==40){
         if(p2points == 40){
             p1pointsDisplay.innerText= "AD";
             p2pointsDisplay.innerText= "";
+            banner.innerText= "";
         }else{
-            p1points= 0;
-            p2points= 0;
-            p1pointsDisplay.innerText= "0";
-            p2pointsDisplay.innerText= "0";
+            gameUpdate();
             p1games= parseInt(p1pointsDisplay.previousElementSibling.innerText);
             p1games++;
             p1pointsDisplay.previousElementSibling.innerText= p1games;
@@ -524,22 +563,88 @@ p1ScoreBtn.addEventListener("click", function(){
                 p2games= parseInt(p2pointsDisplay.previousElementSibling.innerText);
                 if(p2games<5){
                     // Set over. Add a new set if match is not over yet
-                    p1wins++;
-                    if(p1wins==(numSets/2.0)+0.5){
-                        disableButtons();   // Match over
-                        return;
-                    }
-                    const p1newset= document.createElement("td");
-                    p1newset.innerText= "0";
-
-                    const p2newset= document.createElement("td");
-                    p2newset.innerText= "0";
-
-                    p1scores.insertBefore(p1newset, p1pointsDisplay); 
-                    p2scores.insertBefore(p2newset, p2pointsDisplay);
+                    if (checkSetWin(1)) return; 
                 }else if(p2games==6){
                     tieBreaker= 1;// Tie breaker
                 }
+            }
+            if(p1games==7){
+                // Set over. Add a new set if match is not over yet
+                if (checkSetWin(1)) return; 
+            }
+        }
+    }
+});
+
+
+p2ScoreBtn.addEventListener("click", function(){
+    if(tieBreaker){
+        if(p2points<6){
+            p2points++;
+            p2pointsDisplay.innerText= p2points;
+        }else{
+            tieBreaker= 0;
+            gameUpdate();
+            p2pointsDisplay.previousElementSibling.innerText = +p2pointsDisplay.previousElementSibling.innerText + 1;
+            // Set over. Add a new set if match is not over yet
+            if (checkSetWin(2)) return; 
+        }
+        return;      
+    }
+
+    if(p2pointsDisplay.innerText==""){
+        p1pointsDisplay.innerText= "40";
+        p2pointsDisplay.innerText= "40";
+        banner.innerText= "Deuce";
+    }else if(p2pointsDisplay.innerText=="AD"){
+        gameUpdate();
+        banner.innerText= "";
+        p2games= parseInt(p2pointsDisplay.previousElementSibling.innerText);
+        p2games++;
+        p2pointsDisplay.previousElementSibling.innerText= p2games;
+        if(p2games==6){
+            p1games= parseInt(p1pointsDisplay.previousElementSibling.innerText);
+            if(p1games<5){
+                // Set over. Add a new set if match is not over yet
+                if (checkSetWin(2)) return; 
+            }else if(p1games==6){
+                tieBreaker= 1;// Tie breaker
+                banner.innerText= "Tie Breaker";
+            }
+        }
+    }else if(p2points==0){
+        p2pointsDisplay.innerText= "15";
+        p2points= 15;
+    }else if(p2points==15){
+        p2pointsDisplay.innerText= "30";
+        p2points= 30;
+    }else if(p2points==30){
+        p2pointsDisplay.innerText= "40";
+        p2points= 40;
+        if(p1points==40){
+            banner.innerText= "Deuce";
+        }
+    }else if(p2points==40){
+        if(p1points == 40){
+            banner.innerText= "";
+            p2pointsDisplay.innerText= "AD";
+            p1pointsDisplay.innerText= "";
+        }else{
+            gameUpdate();
+            p2games= parseInt(p2pointsDisplay.previousElementSibling.innerText);
+            p2games++;
+            p2pointsDisplay.previousElementSibling.innerText= p2games;
+            if(p2games==6){
+                p1games= parseInt(p1pointsDisplay.previousElementSibling.innerText);
+                if(p1games<5){
+                    // Set over. Add a new set if match is not over yet
+                    if (checkSetWin(2)) return; 
+                }else if(p1games==6){
+                    tieBreaker= 1;// Tie breaker
+                }
+            }
+            if(p2games==7){
+                if (checkSetWin(2)) return; 
             }
         }
     }
