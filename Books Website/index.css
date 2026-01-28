@@ -111,7 +111,7 @@ h3{
 
 #coverPage{
     visibility: hidden;
-    width: 45%;
+    width: 50rem;
     font-size: 1.75rem;
     margin-top: 3rem;
     margin-bottom: 1rem;
@@ -137,6 +137,10 @@ h3{
     h3{
         font-size: 1.8rem;
     }
+
+    #searchBar{
+        width: 20rem;
+    }
 }
 
 @media screen and (max-width:600px){
@@ -146,5 +150,8 @@ h3{
 
     h3{
         font-size: 1.5rem;
+    }
+    #searchBar{
+        width: 18rem;
     }
 }

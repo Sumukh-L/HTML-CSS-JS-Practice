@@ -24,10 +24,8 @@ questions.appendChild(document.createElement("br"));
 
 const p1= document.createElement("span");
 p1.innerText= "Player 1 Name: ";
-// p1.for= "p1Name";
 const p1Input= document.createElement("input");
 p1Input.type= "text";
-// p1Input.name= "p1Name";
 p1Input.placeholder= "Player 1";
 p1.appendChild(p1Input);
 questions.appendChild(p1);
@@ -36,10 +34,8 @@ questions.appendChild(document.createElement("br"));
 
 const p2= document.createElement("span");
 p2.innerText= "Player 2 Name: ";
-// p2.for= "p2Name";
 const p2Input= document.createElement("input");
 p2Input.type= "text";
-// p2Input.name= "p2Name";
 p2Input.placeholder= "Player 2";
 p2.appendChild(p2Input);
 questions.appendChild(p2);
@@ -87,8 +83,8 @@ fiveSets.addEventListener("click", function() {
     threeSets.disabled= true;
 });
 
-let currentServe;
 
+let currentServe;
 p1ServiceBtn.addEventListener("click", function() {
     currentServe= 1;
     p1ServiceBtn.id+= "Clicked";
@@ -108,13 +104,11 @@ scoreboard.id= "scoreboard";
 const scoretable= document.createElement("table");
 
 const topRow= document.createElement("tr");
-// const bottomRow= document.createElement("tr");
 
 const banner= document.createElement("td");
 banner.colSpan= "2";
 
 topRow.appendChild(banner);
-// bottomRow.appendChild(banner.cloneNode(true));
 
 
 const p1scores= document.createElement("tr");
@@ -138,12 +132,12 @@ p2scores.appendChild(p2NameDisplay);
 
 
 const p1set1= document.createElement("td");
-p1set1.id= "p1Set1";
+p1set1.className= "currset";
 p1set1.innerText= "0";
 p1scores.appendChild(p1set1);
 
 const p2set1= document.createElement("td");
-p2set1.id= "p2Set1";
+p2set1.className= "currset";
 p2set1.innerText= "0";
 p2scores.appendChild(p2set1);
 
@@ -161,7 +155,6 @@ p2scores.appendChild(p2pointsDisplay);
 scoretable.appendChild(topRow);
 scoretable.appendChild(p1scores);
 scoretable.appendChild(p2scores);
-// scoretable.appendChild(bottomRow);
 
 scoreboard.appendChild(scoretable);
 
@@ -276,14 +269,12 @@ const b1= document.createElement("span");
 b1.innerText= "Batter 1 Name: ";
 const b1Input= document.createElement("input");
 b1Input.type= "text";
-// p1Input.name= "b1Name";
 b1Input.placeholder= "Batter 1";
 
 const b2= document.createElement("span");
 b2.innerText= "Batter 2 Name: ";
 const b2Input= document.createElement("input");
 b2Input.type= "text";
-// p1Input.name= "b1Name";
 b2Input.placeholder= "Batter 2";
 
 
@@ -372,8 +363,8 @@ b2StrikeBtn.addEventListener("click", function(){
 let teamTotal= 0;
 let teamWickets= 0;
 let totalOvers= 0;
-let b1Runs= 20;
-let b1Balls= 10;
+let b1Runs= 0;
+let b1Balls= 0;
 let b2Runs= 0;
 let b2Balls= 0;
 
@@ -440,11 +431,6 @@ qSubmit2.addEventListener("click", function() {
 });
 
 
-function disableButtons(){
-    p1ScoreBtn.disabled= true;
-    p2ScoreBtn.disabled= true;
-}
-
 let tieBreaker= 0;
 let p1points= 0;
 let p2points= 0;
@@ -452,6 +438,48 @@ let p1games;
 let p2games;
 let p1wins= 0;
 let p2wins= 0;
+
+function addRatings(){
+    const ratingPanel= document.createElement("div");
+    ratingPanel.id= "ratingPanel";
+
+    const rateHeader= document.createElement("h3");
+    rateHeader.innerHTML= "Happy with our Website ?";
+    const rateText= document.createElement("p");
+    rateText.innerHTML= "Consider rating us five stars!"
+    const ratings= document.createElement("div");
+    const star1= document.createElement("span");
+    const star2= document.createElement("span");
+    const star3= document.createElement("span");
+    const star4= document.createElement("span");
+    const star5= document.createElement("span");
+    star1.id= "star1";
+    star2.id= "star2";
+    star3.id= "star3";
+    star4.id= "star4";
+    star5.id= "star5";
+    star1.innerHTML= "&#9733";
+    star2.innerHTML= "&#9733";
+    star3.innerHTML= "&#9733";
+    star4.innerHTML= "&#9733";
+    star5.innerHTML= "&#9733";
+    ratings.appendChild(star1);
+    ratings.appendChild(star2);
+    ratings.appendChild(star3);
+    ratings.appendChild(star4);
+    ratings.appendChild(star5);
+
+    ratingPanel.appendChild(rateHeader);
+    ratingPanel.appendChild(rateText);
+    ratingPanel.appendChild(ratings);
+    document.body.appendChild(ratingPanel);
+    ratingPanel.scrollIntoView({behavior:"smooth"});
+}
+
+function disableButtons(){
+    p1ScoreBtn.disabled= true;
+    p2ScoreBtn.disabled= true;
+}
 
 function gameUpdate(){
     // Update the points after the game 
@@ -473,8 +501,15 @@ function gameUpdate(){
 
 function checkSetWin(winner) {
     // 1. Increment the correct win counter
-    if (winner === 1) p1wins++;
-    else p2wins++;
+    if (winner === 1) {
+        p1wins++;
+        p1pointsDisplay.previousSibling.className="winner";
+        p2pointsDisplay.previousSibling.className="";
+    }else{
+        p2wins++;
+        p1pointsDisplay.previousSibling.className="";
+        p2pointsDisplay.previousSibling.className="winner";
+    } 
 
     // 2. Check if match is over
     let currentWinnerWins = (winner === 1) ? p1wins : p2wins;
@@ -484,12 +519,19 @@ function checkSetWin(winner) {
         p2pointsDisplay.remove();
         let winnerName = (winner === 1) ? (p1Input.value || "Player 1") : (p2Input.value || "Player 2");
         banner.innerText = winnerName + " Wins the Match!";
+        service1.remove();
+        service2.remove();
+        banner.colSpan= "1";
+        addRatings();
+        
         return true; 
     }
 
     // 3. Match not over: Add new set columns to the table
     const p1newset = document.createElement("td");
     const p2newset = document.createElement("td");
+    p1newset.className= "currset";
+    p2newset.className= "currset";
     p1newset.innerText = "0";
     p2newset.innerText = "0";
 
@@ -500,7 +542,6 @@ function checkSetWin(winner) {
 }
 
 
-
 p1ScoreBtn.addEventListener("click", function(){
     if(tieBreaker){
         if(p1points<6){
@@ -508,6 +549,7 @@ p1ScoreBtn.addEventListener("click", function(){
             p1pointsDisplay.innerText= p1points;
         }else{
             tieBreaker= 0;
+            banner.innerText= "";
             gameUpdate();
             p1pointsDisplay.previousElementSibling.innerText = +p1pointsDisplay.previousElementSibling.innerText + 1;
             // Set over. Add a new set if match is not over yet
@@ -566,6 +608,7 @@ p1ScoreBtn.addEventListener("click", function(){
                     if (checkSetWin(1)) return; 
                 }else if(p2games==6){
                     tieBreaker= 1;// Tie breaker
+                    banner.innerText= "Tie Breaker";
                 }
             }
             if(p1games==7){
@@ -584,6 +627,7 @@ p2ScoreBtn.addEventListener("click", function(){
             p2pointsDisplay.innerText= p2points;
         }else{
             tieBreaker= 0;
+            banner.innerText= "";
             gameUpdate();
             p2pointsDisplay.previousElementSibling.innerText = +p2pointsDisplay.previousElementSibling.innerText + 1;
             // Set over. Add a new set if match is not over yet
@@ -641,6 +685,7 @@ p2ScoreBtn.addEventListener("click", function(){
                     if (checkSetWin(2)) return; 
                 }else if(p1games==6){
                     tieBreaker= 1;// Tie breaker
+                    banner.innerText= "Tie Breaker";
                 }
             }
             if(p2games==7){

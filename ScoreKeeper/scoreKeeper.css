@@ -46,6 +46,11 @@ body{
     width: 100%;
 }
 
+#cricketImg:hover, #tennisImg:hover{
+    outline: 0.2rem solid black;
+    outline-offset: 0.2rem;
+}
+
 #cricketOverlay{
     position: absolute;
     top: 70%;
@@ -166,6 +171,7 @@ th{
 
 #p1Service, #p2Service{
     width: 1%;
+    background-color: rgb(94, 92, 92);
 }
 
 #scoreButtons{
@@ -181,7 +187,30 @@ th{
     cursor: pointer;
 }
 
+#p1Points, #p2Points{
+    background-color: rgb(188, 236, 207);
+}
+
+.currset{
+    background-color: rgb(103, 215, 155);
+}
+
+.winner{
+    font-weight: bold;
+}
 
 #scorecard th{
     text-align: center;
 }
+
+#ratingPanel{
+    font-size: 1.5rem;
+}
+
+#star1, #star2, #star3, #star4, #star5{
+    cursor: pointer;
+}
+
+/* #star1:hover, #star2, #star3, #star4, #star5{
+    cursor: pointer;
+} */
