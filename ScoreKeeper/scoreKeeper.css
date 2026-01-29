@@ -88,7 +88,7 @@ body{
     background-color: darkorange;
 }
 
-.quickQuestions span{
+.quickQuestions label{
     font-size: 1.5rem;
     padding: 1rem;
     /* background-color: limegreen; */
@@ -119,15 +119,21 @@ body{
     background-color:aquamarine;
 }
 
-#sets3BtnClicked, #sets5BtnClicked, #p1ServiceBtnClicked, #p2ServiceBtnClicked, 
-#tenOsClicked, #twentyOsClicked, #fiftyOsClicked, #b1StrikeBtnClicked, #b2StrikeBtnCliked{
+/* Target the buttons only when they have the .clicked class */
+#sets3Btn.clicked, 
+#sets5Btn.clicked, 
+#p1ServiceBtn.clicked, 
+#p2ServiceBtn.clicked, 
+#tenOs.clicked, 
+#twentyOs.clicked, 
+#fiftyOs.clicked, 
+#b1StrikeBtn.clicked, 
+#b2StrikeBtn.clicked {
     font-size: 1.5rem;
-    padding: 0.5rem 1rem 0.5rem 1rem;
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
-    margin-bottom: 2rem;
+    padding: 0.5rem 1rem;
+    margin: 0 0.5rem 2rem 0.5rem;
     border-radius: 0.5rem;
-    background-color:aquamarine;
+    background-color: aquamarine;
     border: 0.2rem solid teal;
 }
 
@@ -203,14 +209,127 @@ th{
     text-align: center;
 }
 
-#ratingPanel{
+.star-rating {
+    direction: rtl;
+    display: inline-flex;
+    font-size: 2rem;
+    margin: 20px 0;
+}
+
+.star-rating input[type="radio"] {
+    display: none;
+}
+
+.star-rating label {
+    color: #ddd;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #ffc107;
+}
+
+.star-rating input[type="radio"]:checked ~ label {
+    color: #ffc107;
+}
+
+#ratingPanel {
+    text-align: center;
+    padding: 30px;
+    background: #f9f9f9;
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 400px;
+}
+
+#submitRating {
+    padding: 10px 30px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-top: 15px;
+}
+
+#submitRating:hover {
+    background: #45a049;
+}
+
+h3{
     font-size: 1.5rem;
 }
 
-#star1, #star2, #star3, #star4, #star5{
-    cursor: pointer;
+
+@media screen and (max-width:700px) {
+    #cricket, #tennis{
+        width: 30rem;
+        aspect-ratio: auto;
+    }
+    #cricketImg, #tennisImg{
+        height: auto;
+    }
+    #cricketOverlay, #tennisOverlay{
+        top: 65%;
+        left: 5%;
+        font-size: 2.2rem;
+        padding: 0.45rem;
+    }
 }
 
-/* #star1:hover, #star2, #star3, #star4, #star5{
-    cursor: pointer;
-} */
+@media screen and (max-width:600px) {
+    #cricket, #tennis{
+        width: 25rem;
+        aspect-ratio: auto;
+    }
+    #cricketImg, #tennisImg{
+        height: auto;
+    }
+    #cricketOverlay, #tennisOverlay{
+        top: 60%;
+        left: 5%;
+        font-size: 1.9rem;
+        padding: 0.4rem;
+        border: 0.15rem solid black;
+        border-radius: 0.75rem;
+    }
+}
+
+@media screen and (max-width:550px) {
+    #cricket, #tennis{
+        width: 20rem;
+        aspect-ratio: auto;
+    }
+    #cricketImg, #tennisImg{
+        height: auto;
+    }
+    #cricketOverlay, #tennisOverlay{
+        top: 57%;
+        left: 5%;
+        font-size: 1.6rem;
+        padding: 0.35rem;
+        border: 0.1rem solid black;
+        border-radius: 0.5rem;
+    }
+}
+    
+@media screen and (max-width:400px) {
+    #cricket, #tennis{
+        width: 15rem;
+        aspect-ratio: auto;
+    }
+    #cricketImg, #tennisImg{
+        height: auto;
+    }
+    #cricketOverlay, #tennisOverlay{
+        top: 55%;
+        left: 5%;
+        font-size: 1.3rem;
+        padding: 0.3rem;
+        border: 0.07rem solid black;
+        border-radius: 0.25rem;
+    }
+}

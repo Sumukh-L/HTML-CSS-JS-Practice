@@ -1,696 +1,529 @@
 const tennis=  document.getElementById("tennis");
 const cricket=  document.getElementById("cricket");
 
-const questions= document.createElement("div");
-questions.className= "quickQuestions";
+const questions = document.createElement("div");
+questions.className = "quickQuestions";
+questions.innerHTML = `
+  <h2>Quick Questions!</h2>
+  
+  <label>Number of Sets: </label>
+  <button id="sets3Btn">Best of 3</button>
+  <button id="sets5Btn">Best of 5</button>
+  <br>
 
-const heading= document.createElement("h2");
-heading.innerText= "Quick Questions!";
-questions.appendChild(heading);
+  <label>Player 1 Name: <input type="text" id="p1Input" placeholder="Player 1"></label>
+  <br><br>
 
-const setsLabel= document.createElement("span");
-const threeSets= document.createElement("button");
-const fiveSets= document.createElement("button");
-threeSets.id= "sets3Btn";
-fiveSets.id= "sets5Btn";
-setsLabel.innerText= "Number of Sets: ";
-threeSets.innerText= "Best of 3";
-fiveSets.innerText= "Best of 5";
+  <label>Player 2 Name: <input type="text" id="p2Input" placeholder="Player 2"></label>
+  <br><br><br>
 
-questions.appendChild(setsLabel);
-questions.appendChild(threeSets);
-questions.appendChild(fiveSets);
-questions.appendChild(document.createElement("br"));
+  <label>Who Serves First: </label>
+  <button id="p1ServiceBtn">Player 1 Serves</button>
+  <button id="p2ServiceBtn">Player 2 Serves</button>
+  <br>
 
-const p1= document.createElement("span");
-p1.innerText= "Player 1 Name: ";
-const p1Input= document.createElement("input");
-p1Input.type= "text";
-p1Input.placeholder= "Player 1";
-p1.appendChild(p1Input);
-questions.appendChild(p1);
-questions.appendChild(document.createElement("br"));
-questions.appendChild(document.createElement("br"));
+  <button id= "qSubmit1">Submit</button>
+`;
 
-const p2= document.createElement("span");
-p2.innerText= "Player 2 Name: ";
-const p2Input= document.createElement("input");
-p2Input.type= "text";
-p2Input.placeholder= "Player 2";
-p2.appendChild(p2Input);
-questions.appendChild(p2);
-questions.appendChild(document.createElement("br"));
-questions.appendChild(document.createElement("br"));
-questions.appendChild(document.createElement("br"));
+const scoreboardContainer = document.createElement("div");
+scoreboardContainer.innerHTML = `
+  <div id="scoreboard">
+    <table>
+      <tr id="topRow">
+        <td colspan="2" id="banner"></td>
+      </tr>
+      <tr id="p1scores">
+        <td id="p1Service"></td>
+        <th id="p1NameDisplay"></th>
+        <td class="currset" id="p1set1">0</td>
+        <td id="p1Points">0</td>
+      </tr>
+      <tr id="p2scores">
+        <td id="p2Service"></td>
+        <th id="p2NameDisplay"></th>
+        <td class="currset" id="p2set1">0</td>
+        <td id="p2Points">0</td>
+      </tr>
+    </table>
+  </div>
 
-
-const service= document.createElement("span");
-service.innerText= "Who Serves First: ";
-const p1ServiceBtn= document.createElement("button");
-const p2ServiceBtn= document.createElement("button");
-p1ServiceBtn.id= "p1ServiceBtn";
-p2ServiceBtn.id= "p2ServiceBtn";
-p1ServiceBtn.innerText= "Player 1 Serves";
-p2ServiceBtn.innerText= "Player 2 Serves";
-
-questions.appendChild(service);
-questions.appendChild(p1ServiceBtn);
-questions.appendChild(p2ServiceBtn);
-questions.appendChild(document.createElement("br"));
-
-const qSubmit= document.createElement("button");
-qSubmit.id= "qSubmit1";
-qSubmit.innerText= "Submit";
-
-questions.appendChild(qSubmit);
-
-tennis.addEventListener("click", function() {
-    document.body.appendChild(questions);
-    questions.scrollIntoView({behavior: "smooth" });
-});
-
+  <div id="scoreButtons">
+    <button id="p1ScoreBtn">Player 1 Scores</button>
+    <button id="p2ScoreBtn">Player 2 Scores</button>
+    <br><br><br>
+  </div>
+`;
 
 let numSets= 0;
-threeSets.addEventListener("click", function() {
-    numSets= 3;
-    threeSets.id+= "Clicked";
-    fiveSets.disabled= true;
-});
+let currentServe= 0;
 
-fiveSets.addEventListener("click", function() {
-    numSets= 5;
-    fiveSets.id+= "Clicked";
-    threeSets.disabled= true;
-});
+tennis.addEventListener("click", function () {
+  document.body.appendChild(questions);
+  questions.scrollIntoView({ behavior: "smooth" });
 
+  const btn3 = document.getElementById("sets3Btn");
+  const btn5 = document.getElementById("sets5Btn");
+  const btnP1 = document.getElementById("p1ServiceBtn");
+  const btnP2 = document.getElementById("p2ServiceBtn");
+  const qSubmit1= document.getElementById("qSubmit1");
 
-let currentServe;
-p1ServiceBtn.addEventListener("click", function() {
-    currentServe= 1;
-    p1ServiceBtn.id+= "Clicked";
-    p2ServiceBtn.disabled= true;
-});
+  btn3.addEventListener("click", () => {
+    numSets = 3;
+    btn3.classList.add("clicked");
+    btn5.disabled = true;
+  });
 
-p2ServiceBtn.addEventListener("click", function() {
-    currentServe= 2;
-    p2ServiceBtn.id+= "Clicked";
-    p1ServiceBtn.disabled= true;
-});
+  btn5.addEventListener("click", () => {
+    numSets = 5;
+    btn5.classList.add("clicked");
+    btn3.disabled = true;
+  });
 
+  btnP1.addEventListener("click", () => {
+    currentServe = 1;
+    btnP1.classList.add("clicked");
+    btnP2.disabled = true;
+  });
 
-const scoreboard= document.createElement("div");
-scoreboard.id= "scoreboard";
+  btnP2.addEventListener("click", () => {
+    currentServe = 2;
+    btnP2.classList.add("clicked");
+    btnP1.disabled = true;
+  });
 
-const scoretable= document.createElement("table");
-
-const topRow= document.createElement("tr");
-
-const banner= document.createElement("td");
-banner.colSpan= "2";
-
-topRow.appendChild(banner);
-
-
-const p1scores= document.createElement("tr");
-const p2scores= document.createElement("tr");
-
-
-const service1= document.createElement("td");
-service1.id= "p1Service";
-p1scores.appendChild(service1);
-
-const service2= service1.cloneNode(true);
-service2.id= "p2Service"
-p2scores.appendChild(service2);
-
-
-const p1NameDisplay= document.createElement("th");
-p1scores.appendChild(p1NameDisplay);
-
-const p2NameDisplay= document.createElement("th");
-p2scores.appendChild(p2NameDisplay);
-
-
-const p1set1= document.createElement("td");
-p1set1.className= "currset";
-p1set1.innerText= "0";
-p1scores.appendChild(p1set1);
-
-const p2set1= document.createElement("td");
-p2set1.className= "currset";
-p2set1.innerText= "0";
-p2scores.appendChild(p2set1);
-
-const p1pointsDisplay= document.createElement("td");
-p1pointsDisplay.id= "p1Points";
-p1pointsDisplay.innerText= "0";
-p1scores.appendChild(p1pointsDisplay);
-
-const p2pointsDisplay= document.createElement("td");
-p2pointsDisplay.id= "p2Points";
-p2pointsDisplay.innerText= "0";
-p2scores.appendChild(p2pointsDisplay);
-
-
-scoretable.appendChild(topRow);
-scoretable.appendChild(p1scores);
-scoretable.appendChild(p2scores);
-
-scoreboard.appendChild(scoretable);
-
-const scoreButtons= document.createElement("div");
-
-scoreButtons.id= "scoreButtons";
-const p1ScoreBtn= document.createElement("button");
-p1ScoreBtn.id= "p1ScoreBtn";
-p1ScoreBtn.innerText= "Player 1 Scores"
-const p2ScoreBtn= document.createElement("button");
-p2ScoreBtn.id= "p2ScoreBtn";
-p2ScoreBtn.innerText= "Player 2 Scores"
-const resetBtn= document.createElement("button");
-// resetBtn.id= "resetBtn";
-// resetBtn.innerText= "Reset Game";
-
-scoreButtons.appendChild(p1ScoreBtn);
-scoreButtons.appendChild(p2ScoreBtn);
-// scoreButtons.appendChild(resetBtn);
-scoreButtons.appendChild(document.createElement("br"));
-scoreButtons.appendChild(document.createElement("br"));
-scoreButtons.appendChild(document.createElement("br"));
-
-
-
-qSubmit.addEventListener("click", function() {
+  qSubmit1.addEventListener("click", function() {
     if (!numSets || !currentServe) {
         alert("Please answer all questions before submitting.");
         return;
     }
 
-    p1NameDisplay.innerHTML = p1Input.value || "Player 1";
-    p2NameDisplay.innerHTML = p2Input.value || "Player 2";
+    document.body.appendChild(scoreboardContainer);
+    document.getElementById("scoreboard").scrollIntoView({ behavior: "smooth" });
+    
 
-    if(currentServe==1){
-        service1.innerText= "🎾";
-    }else{
-        service2.innerText= "🎾";
+    const p1scores= document.getElementById("p1scores");
+    const p2scores= document.getElementById("p2scores");
+    const p1pointsDisplay= document.getElementById("p1Points");
+    const p2pointsDisplay= document.getElementById("p2Points");
+    const banner= document.getElementById("banner");
+    const p1ScoreBtn= document.getElementById("p1ScoreBtn");
+    const p2ScoreBtn= document.getElementById("p2ScoreBtn");
+
+    const p1NameDisplay = document.getElementById("p1NameDisplay");
+    const p2NameDisplay = document.getElementById("p2NameDisplay");
+    const service1 = document.getElementById("p1Service");
+    const service2 = document.getElementById("p2Service");
+    const p1Input = document.getElementById("p1Input");
+    const p2Input = document.getElementById("p2Input");
+
+
+    p1NameDisplay.innerText = p1Input.value || "Player 1";
+    p2NameDisplay.innerText = p2Input.value || "Player 2";
+
+    if (currentServe === 1) {
+        service1.innerText = "🎾";
+        service2.innerText = ""; 
+    } else {
+        service2.innerText = "🎾";
+        service1.innerText = "";
     }
 
-    document.body.appendChild(scoreboard);
-    document.body.appendChild(scoreButtons);
-    scoreboard.scrollIntoView({behavior: "smooth" });
+    addRatings();
+
+    p1ScoreBtn.addEventListener("click", () => handlePlayerScore(1));
+    p2ScoreBtn.addEventListener("click", () => handlePlayerScore(2));
+
+
+    let tieBreaker= 0;
+    let p1points= 0;
+    let p2points= 0;
+    let p1wins= 0;
+    let p2wins= 0;
+
+    function disableButtons(){
+        p1ScoreBtn.disabled= true;
+        p2ScoreBtn.disabled= true;
+    }
+
+    function gameUpdate(){
+        // Reset the points after the game 
+        p1points= 0;
+        p2points= 0;
+        p1pointsDisplay.innerText= "0";
+        p2pointsDisplay.innerText= "0";
+
+        // Update the service
+        if(currentServe == 1){
+            currentServe= 2;
+            service1.innerText= "";
+            service2.innerText= "🎾";
+        }else{
+            currentServe= 1;
+            service1.innerText= "🎾";
+            service2.innerText= "";
+        }
+    }
+
+    function checkSetWin(winner) {
+        const oldP1Set = p1scores.querySelector(".currset");
+        const oldP2Set = p2scores.querySelector(".currset");
+        // 1. Increment the correct win counter
+        if (winner === 1) {
+            p1wins++;
+            oldP1Set.className="winner";
+            oldP2Set.className="";
+        }else{
+            p2wins++;
+            oldP1Set.className="";
+            oldP2Set.className="winner";
+        } 
+
+        // 2. Check if match is over
+        let currentWinnerWins = (winner === 1) ? p1wins : p2wins;
+        if (currentWinnerWins === (numSets / 2.0) + 0.5) {
+            disableButtons();
+            p1pointsDisplay.remove();
+            p2pointsDisplay.remove();
+            let winnerName = (winner === 1) ? (p1Input.value || "Player 1") : (p2Input.value || "Player 2");
+            banner.innerText = winnerName + " Wins the Match!";
+            service1.remove();
+            service2.remove();
+            banner.colSpan= "1";
+            // addRatings();
+            
+            return true; 
+        }
+
+        // 3. Match not over: Add new set columns to the table
+        const p1newset = document.createElement("td");
+        const p2newset = document.createElement("td");
+        p1newset.className= "currset";
+        p2newset.className= "currset";
+        p1newset.innerText = "0";
+        p2newset.innerText = "0";
+
+        p1scores.insertBefore(p1newset, p1pointsDisplay);
+        p2scores.insertBefore(p2newset, p2pointsDisplay);
+        
+        return false;
+    } 
+
+    function handlePlayerScore(player) {
+        const isP1 = (player === 1);
+        const currentDisplay = isP1 ? p1pointsDisplay : p2pointsDisplay;
+        const opponentDisplay = isP1 ? p2pointsDisplay : p1pointsDisplay;
+        const currentGamesElement = currentDisplay.previousElementSibling;
+        const opponentGamesElement = opponentDisplay.previousElementSibling;
+        
+        // Tie Breaker logic
+        if(tieBreaker){
+            if(isP1 ? p1points < 6 : p2points < 6){
+                if(isP1) {
+                    p1points++;
+                    currentDisplay.innerText = p1points;
+                } else {
+                    p2points++;
+                    currentDisplay.innerText = p2points;
+                }
+            } else {
+                tieBreaker = 0;
+                banner.innerText = "";
+                gameUpdate();
+                currentGamesElement.innerText = +currentGamesElement.innerText + 1;
+                if (checkSetWin(player)) return;
+            }
+            return;      
+        }
+
+        // Deuce - current player has no score (opponent has advantage)
+        if(currentDisplay.innerText === ""){
+            p1pointsDisplay.innerText = "40";
+            p2pointsDisplay.innerText = "40";
+            banner.innerText = "Deuce";
+            return;
+        }
+        
+        // Current player has advantage - wins the game
+        if(currentDisplay.innerText === "AD"){
+            gameUpdate();
+            banner.innerText = "";
+            let currentGames = parseInt(currentGamesElement.innerText);
+            currentGames++;
+            currentGamesElement.innerText = currentGames;
+            
+            if(currentGames === 6){
+                let opponentGames = parseInt(opponentGamesElement.innerText);
+                if(opponentGames < 5){
+                    if (checkSetWin(player)) return;
+                } else if(opponentGames === 6){
+                    tieBreaker = 1;
+                    banner.innerText = "Tie Breaker";
+                }
+            }
+            return;
+        }
+        
+        // Get current points
+        const currentPoints = isP1 ? p1points : p2points;
+        const opponentPoints = isP1 ? p2points : p1points;
+        
+        // Regular scoring: 0 -> 15 -> 30 -> 40
+        if(currentPoints === 0){
+            currentDisplay.innerText = "15";
+            if(isP1) p1points = 15; else p2points = 15;
+        } else if(currentPoints === 15){
+            currentDisplay.innerText = "30";
+            if(isP1) p1points = 30; else p2points = 30;
+        } else if(currentPoints === 30){
+            if(opponentPoints === 40){
+                banner.innerText = "Deuce";
+            }
+            currentDisplay.innerText = "40";
+            if(isP1) p1points = 40; else p2points = 40;
+        } else if(currentPoints === 40){
+            // Both at 40 - go to advantage
+            if(opponentPoints === 40){
+                banner.innerText = "";
+                currentDisplay.innerText = "AD";
+                opponentDisplay.innerText = "";
+            } else {
+                // Win the game
+                gameUpdate();
+                let currentGames = parseInt(currentGamesElement.innerText);
+                currentGames++;
+                currentGamesElement.innerText = currentGames;
+                
+                if(currentGames === 6){
+                    let opponentGames = parseInt(opponentGamesElement.innerText);
+                    if(opponentGames < 5){
+                        if (checkSetWin(player)) return;
+                    } else if(opponentGames === 6){
+                        tieBreaker = 1;
+                        banner.innerText = "Tie Breaker";
+                    }
+                }
+                if(currentGames === 7){
+                    if (checkSetWin(player)) return;
+                }
+            }
+        }
+    }
+
+  });
+
 });
 
 
 
-const questions2= document.createElement("div");
-questions2.className= "quickQuestions";
 
-const heading2= document.createElement("h2");
-heading2.innerText= "Quick Questions!";
-questions2.appendChild(heading2);
+const questions2 = document.createElement("div");
+questions2.className = "quickQuestions";
+questions2.innerHTML = `
+  <h2>Quick Questions!</h2>
+  
+  <div class="field-group">
+    <label>Choose Overs:</label>
+    <button id="tenOs">10 Overs</button>
+    <button id="twentyOs">20 Overs</button>
+    <button id="fiftyOs">50 Overs</button>
+  </div>
 
-const overLabel= document.createElement("span");
-overLabel.innerHTML= "Choose Overs:"
-const tenOs= document.createElement("button");
-const twentyOs= document.createElement("button");
-const fiftyOs= document.createElement("button");
+  <div class="field-group">
+    <label for="teamName">Choose Your Team:</label>
+    <select name="teamName" id="teamDropDown">
+        <option value="INDIA">India</option>
+        <option value="SOUTH AFRICA">South Africa</option>
+        <option value="ENGLAND">England</option>
+        <option value="NEW ZEALAND">New Zealand</option>
+        <option value="AUSTRALIA">Australia</option>
+        <option value="SRI LANKA">Sri Lanka</option>
+    </select>
+  </div>
 
-tenOs.id= "tenOs";
-twentyOs.id= "twentyOs";
-fiftyOs.id= "fiftyOs";
-tenOs.innerText= "10 Overs";
-twentyOs.innerText= "20 Overs";
-fiftyOs.innerText= "50 Overs";
+  <div class="field-group">
+    <label>Batter 1 Name: <input type="text" id="b1Input" placeholder="Batter 1"></label>
+  </div>
 
-questions2.appendChild(overLabel);
-questions2.appendChild(tenOs);
-questions2.appendChild(twentyOs);
-questions2.appendChild(fiftyOs);
-questions2.appendChild(document.createElement("br"));
+  <div class="field-group">
+    <label>Batter 2 Name: <input type="text" id="b2Input" placeholder="Batter 2"></label>
+  </div>
 
-const teamLabel= document.createElement("span");
-teamLabel.innerHTML= "Choose Your Team:"
-teamLabel.for= "teamName";
+  <div class="field-group">
+    <label>First Strike:</label>
+    <button id="b1StrikeBtn">Batter 1</button>
+    <button id="b2StrikeBtn">Batter 2</button>
+  </div>
 
-const dropDown= document.createElement("select");
-dropDown.name= "teamName";
-const ind= document.createElement("option");
-const sa= document.createElement("option");
-const eng= document.createElement("option");
-const nz= document.createElement("option");
-const aus= document.createElement("option");
-const sl= document.createElement("option");
-ind.innerText= "India";
-sa.innerText= "South Africa";
-eng.innerText= "England";
-nz.innerText= "New Zealand";
-aus.innerText= "Australia";
-sl.innerText= "Sri Lanka";
-ind.value= "INDIA";
-sa.value= "SOUTH AFRICA";
-eng.value= "ENGLAND";
-nz.value= "NEW ZEALAND";
-aus.value= "AUSTRALIA";
-sl.value= "SRI LANKA";
+  <div class="field-group">
+    <label>Bowler Name: <input type="text" id="bowInput" placeholder="Bowler"></label>
+  </div>
+  
+  <button id="qSubmit2">Submit</button>
+`;
 
+let numOvers= 0;
+let currentStrike= 0;
 
-dropDown.appendChild(ind);
-dropDown.appendChild(sa);
-dropDown.appendChild(eng);
-dropDown.appendChild(nz);
-dropDown.appendChild(aus);
-dropDown.appendChild(sl);
-questions2.appendChild(teamLabel);
-questions2.appendChild(dropDown);
-questions2.appendChild(document.createElement("br"));
-questions2.appendChild(document.createElement("br"));
+let teamTotal = 0;
+let teamWickets = 0;
+let totalOvers = 0;
+let b1Runs = 0;
+let b1Balls = 0;
+let b2Runs = 0;
+let b2Balls = 0;
 
-const b1= document.createElement("span");
-b1.innerText= "Batter 1 Name: ";
-const b1Input= document.createElement("input");
-b1Input.type= "text";
-b1Input.placeholder= "Batter 1";
+const scorecard = document.createElement("table");
+scorecard.id = "scorecard";
+scorecard.innerHTML = `
+  <tr id="row1">
+    <!-- RowSpan 2 for Team Name & Score -->
+    <th rowspan="2" id="teamName"></th> 
+    <th id="teamScore">${teamTotal} - ${teamWickets}</th>
+    
+    <!-- Batter 1 Data -->
+    <td id="b1StrikeMarker"></td>
+    <th id="batter1Name"></th>
+    <td id="b1Score">${b1Runs} <sub>${b1Balls}</sub></td>
+    
+    <!-- Bowler Data -->
+    <th id="bowlerName"></th>
+    <td id="bowlerFigures">0 <sub>0</sub></td>
+  </tr>
 
-const b2= document.createElement("span");
-b2.innerText= "Batter 2 Name: ";
-const b2Input= document.createElement("input");
-b2Input.type= "text";
-b2Input.placeholder= "Batter 2";
-
-
-const striker= document.createElement("span");
-striker.innerText= "First Strike:"
-
-const b1StrikeBtn= document.createElement("button");
-const b2StrikeBtn= document.createElement("button");
-b1StrikeBtn.id= "b1StrikeBtn";
-b2StrikeBtn.id= "b1StrikeBtn";
-b1StrikeBtn.innerText= "Batter 1";
-b2StrikeBtn.innerText= "Batter 2";
-
-
-const bow= document.createElement("span");
-bow.innerText= "Bowler Name: ";
-const bowInput= document.createElement("input");
-bowInput.type= "text";
-bowInput.placeholder= "Bowler";
-
-questions2.appendChild(b1);
-questions2.appendChild(b1Input);
-questions2.appendChild(document.createElement("br"));
-questions2.appendChild(b2);
-questions2.appendChild(b2Input);
-questions2.appendChild(document.createElement("br"));
-questions2.appendChild(document.createElement("br"));
-
-questions2.appendChild(striker);
-questions2.appendChild(b1StrikeBtn);
-questions2.appendChild(b2StrikeBtn);
-questions2.appendChild(document.createElement("br"));
-
-questions2.appendChild(bow);
-questions2.appendChild(bowInput);
-questions2.appendChild(document.createElement("br"));
-questions2.appendChild(document.createElement("br"));
-
-const qSubmit2= document.createElement("button");
-qSubmit2.id= "qSubmit2";
-qSubmit2.innerText= "Submit";
-
-questions2.appendChild(qSubmit2);
+  <tr id="row2">
+    <!-- Overs Data -->
+    <th id="oversDisplay">${totalOvers} OVERS</th>
+    
+    <!-- Batter 2 Data -->
+    <td id="b2StrikeMarker"></td>
+    <th id="batter2Name"></th>
+    <td id="b2Score">${b2Runs} <sub>${b2Balls}</sub></td>
+    
+    <!-- Over progression (dots/Xs) -->
+    <td colspan="2" id="overballs"></td>
+  </tr>
+`;
 
 cricket.addEventListener("click", function(){
     document.body.appendChild(questions2);
     questions2.scrollIntoView({behavior: "smooth" });
+
+    const tenOs = document.getElementById("tenOs");
+    const twentyOs = document.getElementById("twentyOs");
+    const fiftyOs = document.getElementById("fiftyOs");
+    const b1StrikeBtn = document.getElementById("b1StrikeBtn");
+    const b2StrikeBtn = document.getElementById("b2StrikeBtn"); 
+    const qSubmit2= document.getElementById("qSubmit2");
+
+    const dropDown = document.getElementById("teamDropDown");
+    const b1Input = document.getElementById("b1Input");
+    const b2Input = document.getElementById("b2Input");
+    const bowInput = document.getElementById("bowInput");
+
+
+    tenOs.addEventListener("click", function(){
+        numOvers = 10;
+        tenOs.classList.add("clicked"); // Use classList
+        twentyOs.disabled = true;
+        fiftyOs.disabled = true;
+    });
+
+    twentyOs.addEventListener("click", function(){
+        numOvers = 20;
+        twentyOs.classList.add("clicked");
+        tenOs.disabled = true;
+        fiftyOs.disabled = true;
+    });
+
+    fiftyOs.addEventListener("click", function(){
+        numOvers = 50;
+        fiftyOs.classList.add("clicked");
+        tenOs.disabled = true;
+        twentyOs.disabled = true;
+    });
+
+    b1StrikeBtn.addEventListener("click", function(){
+        currentStrike = 1;
+        b1StrikeBtn.classList.add("clicked");
+        b2StrikeBtn.disabled = true;
+    });
+
+    b2StrikeBtn.addEventListener("click", function(){
+        currentStrike = 2; 
+        b2StrikeBtn.classList.add("clicked");
+        b1StrikeBtn.disabled = true;
+    });
+
+    qSubmit2.addEventListener("click", function() {
+        if (!numOvers || !currentStrike || !b1Input.value.trim() || !b2Input.value.trim() || !bowInput.value.trim()) {
+            alert("Please answer all questions before submitting.");
+            return;
+        }
+
+        document.body.appendChild(scorecard);
+        scorecard.scrollIntoView({behavior: "smooth" });
+
+        const teamName = document.getElementById("teamName");
+        const batter1 = document.getElementById("batter1Name");
+        const batter2 = document.getElementById("batter2Name");
+        const bowler = document.getElementById("bowlerName");
+        const strike1 = document.getElementById("b1StrikeMarker");
+        const strike2 = document.getElementById("b2StrikeMarker");
+        
+        teamName.innerText = dropDown.value;
+        batter1.innerText = b1Input.value.toUpperCase(); 
+        batter2.innerText = b2Input.value.toUpperCase(); 
+        bowler.innerText = bowInput.value.toUpperCase(); 
+
+        if (currentStrike === 1) {
+            strike1.innerText = "🏏";
+            strike2.innerText = "";
+        } else {
+            strike2.innerText = "🏏";
+            strike1.innerText = "";
+        }
+
+        addRatings();
+
+    });
 });
-
-let numOvers;
-tenOs.addEventListener("click", function(){
-    numOvers= 10;
-    tenOs.id+= "Clicked";
-    twentyOs.disabled= true;
-    fiftyOs.disabled= true;
-});
-
-twentyOs.addEventListener("click", function(){
-    numOvers= 20;
-    twentyOs.id+= "Clicked";
-    tenOs.disabled= true;
-    fiftyOs.disabled= true;
-});
-
-fiftyOs.addEventListener("click", function(){
-    numOvers= 50;
-    fiftyOs.id+= "Clicked";
-    tenOs.disabled= true;
-    twentyOs.disabled= true;
-});
-
-let currentStrike;
-
-b1StrikeBtn.addEventListener("click", function(){
-    currentStrike= 1;
-    b1StrikeBtn.id+= "Clicked";
-    b2StrikeBtn.disabled= true;
-});
-
-b2StrikeBtn.addEventListener("click", function(){
-    currentStrike= 1;
-    b2StrikeBtn.id+= "Clicked";
-    b1StrikeBtn.disabled= true;
-});
-
-let teamTotal= 0;
-let teamWickets= 0;
-let totalOvers= 0;
-let b1Runs= 0;
-let b1Balls= 0;
-let b2Runs= 0;
-let b2Balls= 0;
-
-const scorecard= document.createElement("table");
-scorecard.id= "scorecard";
-const row1= document.createElement("tr");
-
-const teamName= document.createElement("th");
-teamName.rowSpan= "2";
-const teamScore= document.createElement("th");
-teamScore.innerText= teamTotal + " - " + teamWickets;
-const strike1= document.createElement("td");
-const batter1= document.createElement("th");
-const b1Score= document.createElement("td");
-b1Score.innerHTML= b1Runs + " " + "<sub>" + b1Balls + "</sub>";
-const bowler= document.createElement("th");
-const bowFig= document.createElement("td");
-bowFig.innerHTML= "0 <sub>0</sub>"
-
-row1.appendChild(teamName);
-row1.appendChild(teamScore);
-row1.appendChild(strike1);
-row1.appendChild(batter1);
-row1.appendChild(b1Score);
-row1.appendChild(bowler);
-row1.appendChild(bowFig);
-
-const row2= document.createElement("tr");
-
-const overs= document.createElement("th");
-overs.innerText= totalOvers + " OVERS";
-const strike2= document.createElement("td");
-const batter2= document.createElement("th");
-const b2Score= document.createElement("td");
-b2Score.innerHTML= b2Runs + " " + "<sub>" + b2Balls + "</sub>";
-const overballs= document.createElement("td");
-overballs.colSpan= "2";
-
-row2.appendChild(overs);
-row2.appendChild(strike2);
-row2.appendChild(batter2);
-row2.appendChild(b2Score);
-row2.appendChild(overballs);
-
-scorecard.appendChild(row1);
-scorecard.appendChild(row2);
-
-qSubmit2.addEventListener("click", function() {
-    if (!numOvers || !currentStrike) {
-        alert("Please answer all questions before submitting.");
-        return;
-    }
-    teamName.innerText= dropDown.value;
-    batter1.innerText= b1Input.value.toUpperCase();
-    batter2.innerText= b2Input.value.toUpperCase();
-    bowler.innerText= bowInput.value.toUpperCase();
-    if(currentStrike==1){
-        strike1.innerText= "🏏";
-    }else{
-        strike2.innerText= "🏏";
-    }
-    document.body.appendChild(scorecard);
-    scorecard.scrollIntoView({behavior: "smooth" });
-});
-
-
-let tieBreaker= 0;
-let p1points= 0;
-let p2points= 0;
-let p1games;
-let p2games;
-let p1wins= 0;
-let p2wins= 0;
 
 function addRatings(){
-    const ratingPanel= document.createElement("div");
-    ratingPanel.id= "ratingPanel";
-
-    const rateHeader= document.createElement("h3");
-    rateHeader.innerHTML= "Happy with our Website ?";
-    const rateText= document.createElement("p");
-    rateText.innerHTML= "Consider rating us five stars!"
-    const ratings= document.createElement("div");
-    const star1= document.createElement("span");
-    const star2= document.createElement("span");
-    const star3= document.createElement("span");
-    const star4= document.createElement("span");
-    const star5= document.createElement("span");
-    star1.id= "star1";
-    star2.id= "star2";
-    star3.id= "star3";
-    star4.id= "star4";
-    star5.id= "star5";
-    star1.innerHTML= "&#9733";
-    star2.innerHTML= "&#9733";
-    star3.innerHTML= "&#9733";
-    star4.innerHTML= "&#9733";
-    star5.innerHTML= "&#9733";
-    ratings.appendChild(star1);
-    ratings.appendChild(star2);
-    ratings.appendChild(star3);
-    ratings.appendChild(star4);
-    ratings.appendChild(star5);
-
-    ratingPanel.appendChild(rateHeader);
-    ratingPanel.appendChild(rateText);
-    ratingPanel.appendChild(ratings);
-    document.body.appendChild(ratingPanel);
-    ratingPanel.scrollIntoView({behavior:"smooth"});
-}
-
-function disableButtons(){
-    p1ScoreBtn.disabled= true;
-    p2ScoreBtn.disabled= true;
-}
-
-function gameUpdate(){
-    // Update the points after the game 
-    p1points= 0;
-    p2points= 0;
-    p1pointsDisplay.innerText= "0";
-    p2pointsDisplay.innerText= "0";
-
-    if(currentServe == 1){
-        currentServe= 2;
-        service1.innerText= "";
-        service2.innerText= "🎾";
-    }else{
-        currentServe= 1;
-        service1.innerText= "🎾";
-        service2.innerText= "";
-    }
-}
-
-function checkSetWin(winner) {
-    // 1. Increment the correct win counter
-    if (winner === 1) {
-        p1wins++;
-        p1pointsDisplay.previousSibling.className="winner";
-        p2pointsDisplay.previousSibling.className="";
-    }else{
-        p2wins++;
-        p1pointsDisplay.previousSibling.className="";
-        p2pointsDisplay.previousSibling.className="winner";
-    } 
-
-    // 2. Check if match is over
-    let currentWinnerWins = (winner === 1) ? p1wins : p2wins;
-    if (currentWinnerWins === (numSets / 2.0) + 0.5) {
-        disableButtons();
-        p1pointsDisplay.remove();
-        p2pointsDisplay.remove();
-        let winnerName = (winner === 1) ? (p1Input.value || "Player 1") : (p2Input.value || "Player 2");
-        banner.innerText = winnerName + " Wins the Match!";
-        service1.remove();
-        service2.remove();
-        banner.colSpan= "1";
-        addRatings();
+        const ratingPanel = document.createElement("div");
+        ratingPanel.id = "ratingPanel";
         
-        return true; 
+        ratingPanel.innerHTML = `
+            <h3>Happy with our Website?</h3>
+            <p>Consider rating us five stars!</p>
+            <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5">
+                <label for="star5">★</label>
+                <input type="radio" id="star4" name="rating" value="4">
+                <label for="star4">★</label>
+                <input type="radio" id="star3" name="rating" value="3">
+                <label for="star3">★</label>
+                <input type="radio" id="star2" name="rating" value="2">
+                <label for="star2">★</label>
+                <input type="radio" id="star1" name="rating" value="1">
+                <label for="star1">★</label>
+            </div>
+            <button id="submitRating">Submit Rating</button>
+        `;
+        
+        document.body.appendChild(ratingPanel);
+        ratingPanel.scrollIntoView({behavior: "smooth"});
+        
+        // Handle rating submission
+        const submitBtn = document.getElementById("submitRating");
+        submitBtn.addEventListener("click", function(){
+            const selectedRating = document.querySelector('input[name="rating"]:checked');
+            if(selectedRating){
+                const thanks= document.createElement("h3");
+                thanks.innerHTML= `Thanks for rating us ${selectedRating.value} stars!`;
+                document.body.appendChild(thanks);
+                ratingPanel.style.display = "none";
+            } else {
+                alert("Please select a rating!");
+            }
+        });
     }
-
-    // 3. Match not over: Add new set columns to the table
-    const p1newset = document.createElement("td");
-    const p2newset = document.createElement("td");
-    p1newset.className= "currset";
-    p2newset.className= "currset";
-    p1newset.innerText = "0";
-    p2newset.innerText = "0";
-
-    p1scores.insertBefore(p1newset, p1pointsDisplay);
-    p2scores.insertBefore(p2newset, p2pointsDisplay);
-    
-    return false;
-}
-
-
-p1ScoreBtn.addEventListener("click", function(){
-    if(tieBreaker){
-        if(p1points<6){
-            p1points++;
-            p1pointsDisplay.innerText= p1points;
-        }else{
-            tieBreaker= 0;
-            banner.innerText= "";
-            gameUpdate();
-            p1pointsDisplay.previousElementSibling.innerText = +p1pointsDisplay.previousElementSibling.innerText + 1;
-            // Set over. Add a new set if match is not over yet
-            if (checkSetWin(1)) return; 
-        }
-        return;      
-    }
-
-    if(p1pointsDisplay.innerText==""){
-        p1pointsDisplay.innerText= "40";
-        p2pointsDisplay.innerText= "40";
-        banner.innerText= "Deuce";
-    }else if(p1pointsDisplay.innerText=="AD"){
-        gameUpdate();
-        banner.innerText= "";
-        p1games= parseInt(p1pointsDisplay.previousElementSibling.innerText);
-        p1games++;
-        p1pointsDisplay.previousElementSibling.innerText= p1games;
-
-        if(p1games==6){
-            p2games= parseInt(p2pointsDisplay.previousElementSibling.innerText);
-            if(p2games<5){
-                // Set over. Add a new set if match is not over yet
-                if (checkSetWin(1)) return; 
-            }else if(p2games==6){
-                tieBreaker= 1;// Tie breaker
-                banner.innerText= "Tie Breaker";
-            }
-        }
-    }else if(p1points==0){
-        p1pointsDisplay.innerText= "15";
-        p1points= 15;
-    }else if(p1points==15){
-        p1pointsDisplay.innerText= "30";
-        p1points= 30;
-    }else if(p1points==30){
-        if(p2points==40){
-            banner.innerText= "Deuce";
-        }
-        p1pointsDisplay.innerText= "40";
-        p1points= 40;
-    }else if(p1points==40){
-        if(p2points == 40){
-            p1pointsDisplay.innerText= "AD";
-            p2pointsDisplay.innerText= "";
-            banner.innerText= "";
-        }else{
-            gameUpdate();
-            p1games= parseInt(p1pointsDisplay.previousElementSibling.innerText);
-            p1games++;
-            p1pointsDisplay.previousElementSibling.innerText= p1games;
-            if(p1games==6){
-                p2games= parseInt(p2pointsDisplay.previousElementSibling.innerText);
-                if(p2games<5){
-                    // Set over. Add a new set if match is not over yet
-                    if (checkSetWin(1)) return; 
-                }else if(p2games==6){
-                    tieBreaker= 1;// Tie breaker
-                    banner.innerText= "Tie Breaker";
-                }
-            }
-            if(p1games==7){
-                // Set over. Add a new set if match is not over yet
-                if (checkSetWin(1)) return; 
-            }
-        }
-    }
-});
-
-
-p2ScoreBtn.addEventListener("click", function(){
-    if(tieBreaker){
-        if(p2points<6){
-            p2points++;
-            p2pointsDisplay.innerText= p2points;
-        }else{
-            tieBreaker= 0;
-            banner.innerText= "";
-            gameUpdate();
-            p2pointsDisplay.previousElementSibling.innerText = +p2pointsDisplay.previousElementSibling.innerText + 1;
-            // Set over. Add a new set if match is not over yet
-            if (checkSetWin(2)) return; 
-        }
-        return;      
-    }
-
-    if(p2pointsDisplay.innerText==""){
-        p1pointsDisplay.innerText= "40";
-        p2pointsDisplay.innerText= "40";
-        banner.innerText= "Deuce";
-    }else if(p2pointsDisplay.innerText=="AD"){
-        gameUpdate();
-        banner.innerText= "";
-        p2games= parseInt(p2pointsDisplay.previousElementSibling.innerText);
-        p2games++;
-        p2pointsDisplay.previousElementSibling.innerText= p2games;
-        if(p2games==6){
-            p1games= parseInt(p1pointsDisplay.previousElementSibling.innerText);
-            if(p1games<5){
-                // Set over. Add a new set if match is not over yet
-                if (checkSetWin(2)) return; 
-            }else if(p1games==6){
-                tieBreaker= 1;// Tie breaker
-                banner.innerText= "Tie Breaker";
-            }
-        }
-    }else if(p2points==0){
-        p2pointsDisplay.innerText= "15";
-        p2points= 15;
-    }else if(p2points==15){
-        p2pointsDisplay.innerText= "30";
-        p2points= 30;
-    }else if(p2points==30){
-        p2pointsDisplay.innerText= "40";
-        p2points= 40;
-        if(p1points==40){
-            banner.innerText= "Deuce";
-        }
-    }else if(p2points==40){
-        if(p1points == 40){
-            banner.innerText= "";
-            p2pointsDisplay.innerText= "AD";
-            p1pointsDisplay.innerText= "";
-        }else{
-            gameUpdate();
-            p2games= parseInt(p2pointsDisplay.previousElementSibling.innerText);
-            p2games++;
-            p2pointsDisplay.previousElementSibling.innerText= p2games;
-            if(p2games==6){
-                p1games= parseInt(p1pointsDisplay.previousElementSibling.innerText);
-                if(p1games<5){
-                    // Set over. Add a new set if match is not over yet
-                    if (checkSetWin(2)) return; 
-                }else if(p1games==6){
-                    tieBreaker= 1;// Tie breaker
-                    banner.innerText= "Tie Breaker";
-                }
-            }
-            if(p2games==7){
-                if (checkSetWin(2)) return; 
-            }
-        }
-    }
-});
