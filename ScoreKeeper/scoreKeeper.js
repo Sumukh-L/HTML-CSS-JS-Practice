@@ -1,95 +1,96 @@
 const tennis=  document.getElementById("tennis");
 const cricket=  document.getElementById("cricket");
 
-const questions = document.createElement("div");
-questions.className = "quickQuestions";
-questions.innerHTML = `
-  <h2>Quick Questions!</h2>
-  
-  <label>Number of Sets: </label>
-  <button id="sets3Btn">Best of 3</button>
-  <button id="sets5Btn">Best of 5</button>
-  <br>
-
-  <label>Player 1 Name: <input type="text" id="p1Input" placeholder="Player 1"></label>
-  <br><br>
-
-  <label>Player 2 Name: <input type="text" id="p2Input" placeholder="Player 2"></label>
-  <br><br><br>
-
-  <label>Who Serves First: </label>
-  <button id="p1ServiceBtn">Player 1 Serves</button>
-  <button id="p2ServiceBtn">Player 2 Serves</button>
-  <br>
-
-  <button id= "qSubmit1">Submit</button>
-`;
-
-const scoreboardContainer = document.createElement("div");
-scoreboardContainer.innerHTML = `
-  <div id="scoreboard">
-    <table>
-      <tr id="topRow">
-        <td colspan="2" id="banner"></td>
-      </tr>
-      <tr id="p1scores">
-        <td id="p1Service"></td>
-        <th id="p1NameDisplay"></th>
-        <td class="currset" id="p1set1">0</td>
-        <td id="p1Points">0</td>
-      </tr>
-      <tr id="p2scores">
-        <td id="p2Service"></td>
-        <th id="p2NameDisplay"></th>
-        <td class="currset" id="p2set1">0</td>
-        <td id="p2Points">0</td>
-      </tr>
-    </table>
-  </div>
-
-  <div id="scoreButtons">
-    <button id="p1ScoreBtn">Player 1 Scores</button>
-    <button id="p2ScoreBtn">Player 2 Scores</button>
-    <br><br><br>
-  </div>
-`;
-
 let numSets= 0;
 let currentServe= 0;
 
 tennis.addEventListener("click", function () {
-  document.body.appendChild(questions);
-  questions.scrollIntoView({ behavior: "smooth" });
+    clearGameElements();
+    const questions = document.createElement("div");
+    questions.className = "quickQuestions";
+    questions.innerHTML = `
+    <h2>Quick Questions!</h2>
+    
+    <label>Number of Sets: </label>
+    <button id="sets3Btn">Best of 3</button>
+    <button id="sets5Btn">Best of 5</button>
+    <br>
 
-  const btn3 = document.getElementById("sets3Btn");
-  const btn5 = document.getElementById("sets5Btn");
-  const btnP1 = document.getElementById("p1ServiceBtn");
-  const btnP2 = document.getElementById("p2ServiceBtn");
-  const qSubmit1= document.getElementById("qSubmit1");
+    <label>Player 1 Name: <input type="text" id="p1Input" placeholder="Player 1"></label>
+    <br><br>
 
-  btn3.addEventListener("click", () => {
-    numSets = 3;
-    btn3.classList.add("clicked");
-    btn5.disabled = true;
-  });
+    <label>Player 2 Name: <input type="text" id="p2Input" placeholder="Player 2"></label>
+    <br><br><br>
 
-  btn5.addEventListener("click", () => {
-    numSets = 5;
-    btn5.classList.add("clicked");
-    btn3.disabled = true;
-  });
+    <label>Who Serves First: </label>
+    <button id="p1ServiceBtn">Player 1 Serves</button>
+    <button id="p2ServiceBtn">Player 2 Serves</button>
+    <br>
 
-  btnP1.addEventListener("click", () => {
-    currentServe = 1;
-    btnP1.classList.add("clicked");
-    btnP2.disabled = true;
-  });
+    <button id= "qSubmit1">Submit</button>
+    `;
 
-  btnP2.addEventListener("click", () => {
-    currentServe = 2;
-    btnP2.classList.add("clicked");
-    btnP1.disabled = true;
-  });
+    document.body.appendChild(questions);
+    questions.scrollIntoView({ behavior: "smooth" });
+
+    const btn3 = document.getElementById("sets3Btn");
+    const btn5 = document.getElementById("sets5Btn");
+    const btnP1 = document.getElementById("p1ServiceBtn");
+    const btnP2 = document.getElementById("p2ServiceBtn");
+    const qSubmit1= document.getElementById("qSubmit1");
+
+    btn3.addEventListener("click", () => {
+        numSets = 3;
+        btn3.classList.add("clicked");
+        btn5.disabled = true;
+    });
+
+    btn5.addEventListener("click", () => {
+        numSets = 5;
+        btn5.classList.add("clicked");
+        btn3.disabled = true;
+    });
+
+    btnP1.addEventListener("click", () => {
+        currentServe = 1;
+        btnP1.classList.add("clicked");
+        btnP2.disabled = true;
+    });
+
+    btnP2.addEventListener("click", () => {
+        currentServe = 2;
+        btnP2.classList.add("clicked");
+        btnP1.disabled = true;
+    });
+
+    const scoreboardContainer = document.createElement("div");
+    scoreboardContainer.innerHTML = `
+    <div id="scoreboard">
+        <table>
+        <tr id="topRow">
+            <td colspan="2" id="banner"></td>
+        </tr>
+        <tr id="p1scores">
+            <td id="p1Service"></td>
+            <th id="p1NameDisplay"></th>
+            <td class="currset" id="p1set1">0</td>
+            <td id="p1Points">0</td>
+        </tr>
+        <tr id="p2scores">
+            <td id="p2Service"></td>
+            <th id="p2NameDisplay"></th>
+            <td class="currset" id="p2set1">0</td>
+            <td id="p2Points">0</td>
+        </tr>
+        </table>
+    </div>
+
+    <div id="scoreButtons">
+        <button id="p1ScoreBtn">Player 1 Scores</button>
+        <button id="p2ScoreBtn">Player 2 Scores</button>
+        <br><br><br>
+    </div>
+    `;
 
   qSubmit1.addEventListener("click", function() {
     if (!numSets || !currentServe) {
@@ -314,53 +315,6 @@ tennis.addEventListener("click", function () {
 });
 
 
-
-
-const questions2 = document.createElement("div");
-questions2.className = "quickQuestions";
-questions2.innerHTML = `
-  <h2>Quick Questions!</h2>
-  
-  <div class="field-group">
-    <label>Choose Overs:</label>
-    <button id="tenOs">10 Overs</button>
-    <button id="twentyOs">20 Overs</button>
-    <button id="fiftyOs">50 Overs</button>
-  </div>
-
-  <div class="field-group">
-    <label for="teamName">Choose Your Team:</label>
-    <select name="teamName" id="teamDropDown">
-        <option value="INDIA">India</option>
-        <option value="SOUTH AFRICA">South Africa</option>
-        <option value="ENGLAND">England</option>
-        <option value="NEW ZEALAND">New Zealand</option>
-        <option value="AUSTRALIA">Australia</option>
-        <option value="SRI LANKA">Sri Lanka</option>
-    </select>
-  </div>
-
-  <div class="field-group">
-    <label>Batter 1 Name: <input type="text" id="b1Input" placeholder="Batter 1"></label>
-  </div>
-
-  <div class="field-group">
-    <label>Batter 2 Name: <input type="text" id="b2Input" placeholder="Batter 2"></label>
-  </div>
-
-  <div class="field-group">
-    <label>First Strike:</label>
-    <button id="b1StrikeBtn">Batter 1</button>
-    <button id="b2StrikeBtn">Batter 2</button>
-  </div>
-
-  <div class="field-group">
-    <label>Bowler Name: <input type="text" id="bowInput" placeholder="Bowler"></label>
-  </div>
-  
-  <button id="qSubmit2">Submit</button>
-`;
-
 let numOvers= 0;
 let currentStrike= 0;
 
@@ -372,39 +326,54 @@ let b1Balls = 0;
 let b2Runs = 0;
 let b2Balls = 0;
 
-const scorecard = document.createElement("table");
-scorecard.id = "scorecard";
-scorecard.innerHTML = `
-  <tr id="row1">
-    <!-- RowSpan 2 for Team Name & Score -->
-    <th rowspan="2" id="teamName"></th> 
-    <th id="teamScore">${teamTotal} - ${teamWickets}</th>
-    
-    <!-- Batter 1 Data -->
-    <td id="b1StrikeMarker"></td>
-    <th id="batter1Name"></th>
-    <td id="b1Score">${b1Runs} <sub>${b1Balls}</sub></td>
-    
-    <!-- Bowler Data -->
-    <th id="bowlerName"></th>
-    <td id="bowlerFigures">0 <sub>0</sub></td>
-  </tr>
 
-  <tr id="row2">
-    <!-- Overs Data -->
-    <th id="oversDisplay">${totalOvers} OVERS</th>
-    
-    <!-- Batter 2 Data -->
-    <td id="b2StrikeMarker"></td>
-    <th id="batter2Name"></th>
-    <td id="b2Score">${b2Runs} <sub>${b2Balls}</sub></td>
-    
-    <!-- Over progression (dots/Xs) -->
-    <td colspan="2" id="overballs"></td>
-  </tr>
-`;
 
 cricket.addEventListener("click", function(){
+    clearGameElements();
+    const questions2 = document.createElement("div");
+    questions2.className = "quickQuestions";
+    questions2.innerHTML = `
+    <h2>Quick Questions!</h2>
+    
+    <div class="field-group">
+        <label>Choose Overs:</label>
+        <button id="tenOs">10 Overs</button>
+        <button id="twentyOs">20 Overs</button>
+        <button id="fiftyOs">50 Overs</button>
+    </div>
+
+    <div class="field-group">
+        <label for="teamName">Choose Your Team:</label>
+        <select name="teamName" id="teamDropDown">
+            <option value="INDIA">India</option>
+            <option value="SOUTH AFRICA">South Africa</option>
+            <option value="ENGLAND">England</option>
+            <option value="NEW ZEALAND">New Zealand</option>
+            <option value="AUSTRALIA">Australia</option>
+            <option value="SRI LANKA">Sri Lanka</option>
+        </select>
+    </div>
+
+    <div class="field-group">
+        <label>Batter 1 Name: <input type="text" id="b1Input" placeholder="Batter 1"></label>
+    </div>
+
+    <div class="field-group">
+        <label>Batter 2 Name: <input type="text" id="b2Input" placeholder="Batter 2"></label>
+    </div>
+
+    <div class="field-group">
+        <label>First Strike:</label>
+        <button id="b1StrikeBtn">Batter 1</button>
+        <button id="b2StrikeBtn">Batter 2</button>
+    </div>
+
+    <div class="field-group">
+        <label>Bowler Name: <input type="text" id="bowInput" placeholder="Bowler"></label>
+    </div>
+    
+    <button id="qSubmit2">Submit</button>
+    `;
     document.body.appendChild(questions2);
     questions2.scrollIntoView({behavior: "smooth" });
 
@@ -454,6 +423,39 @@ cricket.addEventListener("click", function(){
         b1StrikeBtn.disabled = true;
     });
 
+
+    const scorecard = document.createElement("table");
+    scorecard.id = "scorecard";
+    scorecard.innerHTML = `
+    <tr id="row1">
+        <!-- RowSpan 2 for Team Name & Score -->
+        <th rowspan="2" id="teamName"></th> 
+        <th id="teamScore">${teamTotal} - ${teamWickets}</th>
+        
+        <!-- Batter 1 Data -->
+        <td id="b1StrikeMarker"></td>
+        <th id="batter1Name"></th>
+        <td id="b1Score">${b1Runs} <sub>${b1Balls}</sub></td>
+        
+        <!-- Bowler Data -->
+        <th id="bowlerName"></th>
+        <td id="bowlerFigures">0 <sub>0</sub></td>
+    </tr>
+
+    <tr id="row2">
+        <!-- Overs Data -->
+        <th id="oversDisplay">${totalOvers} OVERS</th>
+        
+        <!-- Batter 2 Data -->
+        <td id="b2StrikeMarker"></td>
+        <th id="batter2Name"></th>
+        <td id="b2Score">${b2Runs} <sub>${b2Balls}</sub></td>
+        
+        <!-- Over progression (dots/Xs) -->
+        <td colspan="2" id="overballs"></td>
+    </tr>
+    `;
+
     qSubmit2.addEventListener("click", function() {
         if (!numOvers || !currentStrike || !b1Input.value.trim() || !b2Input.value.trim() || !bowInput.value.trim()) {
             alert("Please answer all questions before submitting.");
@@ -489,41 +491,64 @@ cricket.addEventListener("click", function(){
 });
 
 function addRatings(){
-        const ratingPanel = document.createElement("div");
-        ratingPanel.id = "ratingPanel";
+    const ratingPanel = document.createElement("div");
+    ratingPanel.id = "ratingPanel";
         
-        ratingPanel.innerHTML = `
-            <h3>Happy with our Website?</h3>
-            <p>Consider rating us five stars!</p>
-            <div class="star-rating">
-                <input type="radio" id="star5" name="rating" value="5">
-                <label for="star5">★</label>
-                <input type="radio" id="star4" name="rating" value="4">
-                <label for="star4">★</label>
-                <input type="radio" id="star3" name="rating" value="3">
-                <label for="star3">★</label>
-                <input type="radio" id="star2" name="rating" value="2">
-                <label for="star2">★</label>
-                <input type="radio" id="star1" name="rating" value="1">
-                <label for="star1">★</label>
-            </div>
-            <button id="submitRating">Submit Rating</button>
-        `;
+    ratingPanel.innerHTML = `
+        <h3>Happy with our Website?</h3>
+        <p>Consider rating us five stars!</p>
+        <div class="star-rating">
+            <input type="radio" id="star5" name="rating" value="5">
+            <label for="star5">★</label>
+            <input type="radio" id="star4" name="rating" value="4">
+            <label for="star4">★</label>
+            <input type="radio" id="star3" name="rating" value="3">
+            <label for="star3">★</label>
+            <input type="radio" id="star2" name="rating" value="2">
+            <label for="star2">★</label>
+            <input type="radio" id="star1" name="rating" value="1">
+            <label for="star1">★</label>
+        </div>
+        <button id="submitRating">Submit Rating</button>
+    `;
         
-        document.body.appendChild(ratingPanel);
-        ratingPanel.scrollIntoView({behavior: "smooth"});
+    document.body.appendChild(ratingPanel);
+    ratingPanel.scrollIntoView({behavior: "smooth"});
         
-        // Handle rating submission
-        const submitBtn = document.getElementById("submitRating");
-        submitBtn.addEventListener("click", function(){
-            const selectedRating = document.querySelector('input[name="rating"]:checked');
-            if(selectedRating){
-                const thanks= document.createElement("h3");
-                thanks.innerHTML= `Thanks for rating us ${selectedRating.value} stars!`;
-                document.body.appendChild(thanks);
-                ratingPanel.style.display = "none";
-            } else {
-                alert("Please select a rating!");
-            }
-        });
-    }
+    // Handle rating submission
+    const submitBtn = document.getElementById("submitRating");
+    submitBtn.addEventListener("click", function(){
+        const selectedRating = document.querySelector('input[name="rating"]:checked');
+        if(selectedRating){
+            const thanks= document.createElement("h3");
+            thanks.innerHTML= `Thanks for rating us ${selectedRating.value} stars!`;
+            ratingPanel.style.display = "none";
+            document.body.appendChild(thanks);
+            setTimeout(() => {
+                thanks.remove();
+            }, 1000);
+        } else {
+            alert("Please select a rating!");
+        }
+    });
+}
+
+function clearGameElements() {
+    // Remove all game-related elements
+    const elementsToRemove = [
+        document.querySelector(".quickQuestions"),
+        document.getElementById("scoreboard")?.parentElement, // scoreboardContainer
+        document.getElementById("scorecard"),
+        document.getElementById("ratingPanel")
+    ];
+    
+    elementsToRemove.forEach(element => {
+        if (element) element.remove();
+    });
+    
+    // Reset state variables
+    numSets = 0;
+    currentServe = 0;
+    numOvers = 0;
+    currentStrike = 0;
+}

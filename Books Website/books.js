@@ -81,13 +81,13 @@ coverButtons.forEach((button) => {
         coverPage.innerHTML = bookContent[bookId];
         coverPage.style.visibility = "visible";
         coverPage.scrollIntoView({
-            behaviour: 'smooth',
-            block: 'center'
+            behavior: 'smooth',
+            block: 'center',
         });
     });
 });
 
-
+const searchContainer= document.querySelector(".search-container");
 const searchBtn= document.getElementById("submitButton");
 const searchBar= document.getElementById("searchBar");
 const modal = document.getElementById("myModal");
@@ -115,6 +115,7 @@ async function searchBooks() {
 
     displayBooks(data.docs);
     modal.style.display = "block";
+    searchContainer.style.display= "none";
 }
 
 function displayBooks(books){
@@ -139,7 +140,7 @@ function displayBooks(books){
         bookDiv.style.marginBottom = "2rem";
 
         bookDiv.innerHTML = `
-        ${coverURL ? `<img src="${coverURL}" />` : ""}
+        ${coverURL ? `<img src="${coverURL}" loading="lazy"/>` : ""}
         <h2>${title}</h2>
         <h4>${author}</h4>
         <p>${year}</p>
@@ -152,14 +153,20 @@ function displayBooks(books){
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
   if (event.target == modal) {
     modal.style.display = "none";
+    searchContainer.style.display= "flex";
   }
 }
+
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 400) { // Adjust threshold as needed
+        searchContainer.classList.add('scrolled');
+        searchBar.classList.add('scrolled');
+    } else {
+        searchContainer.classList.remove('scrolled');
+        searchBar.classList.remove('scrolled');
+    }
+});
