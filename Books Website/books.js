@@ -89,6 +89,13 @@ coverButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
         showCoverPage(event);
     });
+    // Allow Enter key to trigger showCoverPage when button is focused (accessibility)
+    button.addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+            event.preventDefault();
+            showCoverPage(event);
+        }
+    });
 });
 
 const searchContainer= document.querySelector(".search-container");
@@ -99,8 +106,18 @@ const modalContent= document.getElementById("modal-content");
 
 searchBtn.addEventListener("click", searchBooks);
 
+// Submit when Enter is pressed in search bar
 searchBar.addEventListener("keydown", (e)=>{
     if(e.key == "Enter"){
+        e.preventDefault();
+        searchBooks();
+    }
+});
+
+// Submit when Enter is pressed while focus is on the submit button (accessibility)
+searchBtn.addEventListener("keydown", (e)=>{
+    if(e.key == "Enter"){
+        e.preventDefault();
         searchBooks();
     }
 });
