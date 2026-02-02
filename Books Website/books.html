@@ -5,19 +5,19 @@
     <meta name= "viewport" content= "width=device-width, initial-scale= 1.0">
 
     <title>Samvedanam</title>
-    <link rel="stylesheet" href="./index.css">
+    <link rel="stylesheet" href="./books.css">
 </head>   
 
 <body>
     
-    <img src="background.jpg" alt="Books" id="background"/>
+    <img src="background.jpg" alt="" id="background" tabindex="-1" role="presentation"/>
 
     <h1>Samvedanam</h1>
     <h3>Explore New Books!</h3>
-    <!-- Wrap the search elements in a container -->
+    <!-- Wrap the search elements in a container; tab order: search bar first, then submit -->
     <div class="search-container">
-        <input type="text" id="searchBar" placeholder="Search for books..." autocomplete="on">
-        <button type="submit" id="submitButton">Search</button>
+        <input type="text" id="searchBar" placeholder="Search for books..." autocomplete="on" aria-label="Search for books" tabindex="0">
+        <button type="submit" id="submitButton" aria-label="Submit search" tabindex="0">Search</button>
     </div>
 
     <div id="myModal" class="modal">
@@ -99,6 +99,6 @@
 
         <div id="coverPage"></div>
     </div>
-    <script type="text/javascript" src="./index.js"></script>
+    <script type="text/javascript" src="./books.js"></script>
 </body>
 </html>

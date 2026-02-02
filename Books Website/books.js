@@ -65,25 +65,29 @@ const bookContent = {
 
 const coverButtons = document.querySelectorAll(".book button");
 
+function showCoverPage(event){
+    const clickedButton = event.currentTarget;
+    const bookId = clickedButton.id; 
+
+    const allCovers = document.querySelectorAll("#coverPage");
+    allCovers.forEach(cover => {
+        cover.innerHTML = "";
+        cover.style.visibility = "hidden";
+    });
+
+    const coverPage = clickedButton.parentElement.parentElement.nextElementSibling;
+
+    coverPage.innerHTML = bookContent[bookId];
+    coverPage.style.visibility = "visible";
+    coverPage.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+    });
+}
+
 coverButtons.forEach((button) => {
     button.addEventListener("click", (event) => {
-        const clickedButton = event.currentTarget;
-        const bookId = clickedButton.id; 
-
-        const allCovers = document.querySelectorAll("#coverPage");
-        allCovers.forEach(cover => {
-            cover.innerHTML = "";
-            cover.style.visibility = "hidden";
-        });
-
-        const coverPage = clickedButton.parentElement.parentElement.nextElementSibling;
-
-        coverPage.innerHTML = bookContent[bookId];
-        coverPage.style.visibility = "visible";
-        coverPage.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center',
-        });
+        showCoverPage(event);
     });
 });
 
